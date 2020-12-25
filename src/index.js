@@ -1,3 +1,4 @@
+// import React  from 'react';
 import React , {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
@@ -28,15 +29,33 @@ class AxiosData extends React.Component {
     this.state = {  
       users: [],
       loading: false
-    
     };
+    //bind
+    this.handleSubmit = this.handleSubmit.bind(this);
+
   }
 
+  //get more user
   getUser(){
     //Loading Data
     this.setState({
       loading: true
-    })
+    });
+
+    axios("https://api.randomuser.me/?nat=US&results=5").then(response => 
+      this.setState({
+          users: [...this.state.users, ...response.data.results],
+          loading: false
+      }) 
+    );
+  }
+
+  //change user
+  getUserChange(){
+    //Loading Data
+    this.setState({
+      loading: true
+    });
 
     axios("https://api.randomuser.me/?nat=US&results=5").then(response => 
       this.setState({
@@ -44,6 +63,13 @@ class AxiosData extends React.Component {
           loading: false
       }) 
     );
+  }
+
+  handleSubmit(e){
+    e.preventDeafult();
+    this.getUsers();
+    console.log("more users loaded");
+
   }
 
 
@@ -54,18 +80,26 @@ class AxiosData extends React.Component {
 
   render() {
     return (
+      // const {loading, users} = this.state
       <div>
         axios API: 
-        {!this.state.loading ? 
+        <form onSubmit={this.handleSubmit}>
+          <input type="submit" value="load users" />
+        </form>
+        <hr />
+        {!this.state.loading ? (
           this.state.users.map(user =>  (
-          <div>
-            <h3>{user.name.first}</h3>
+          <div key={user.id.value}>
+            <h3 style={{color:'red'}}>{user.name.first}</h3>
             <p>{user.email}</p>
             <p>{user.cell}</p>
             <hr/>
+
           </div>
-          
-          )): <Loading message="Hey Hey Hey" />}
+          ))
+          ) : (
+            <Loading message="Hey Hey Hey" />
+          )}
       </div>
       
     );
@@ -73,6 +107,11 @@ class AxiosData extends React.Component {
 
 }
 
+
+// <form onSubmit={this.handSubmit}>
+// <input type="submit" value="load users">
+
+// </form>
 // <Loading message={this.state} />
 
 
