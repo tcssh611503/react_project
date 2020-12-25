@@ -1,9 +1,10 @@
-import React from 'react';
+import React , {Component} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import axios from 'axios'
-import Loading from './Loading'
+import Loading from './Loading'  //way1 way3
+// import { Loading } from './Loading'  //way2
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -64,13 +65,17 @@ class AxiosData extends React.Component {
             <hr/>
           </div>
           
-          )): <Loading />}
+          )): <Loading message="Hey Hey Hey" />}
       </div>
       
     );
   }
 
 }
+
+// <Loading message={this.state} />
+
+
 
 ReactDOM.render(
   <AxiosData />,
