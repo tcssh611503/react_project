@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import axios from 'axios'
+import Loading from './Loading'
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -23,16 +24,27 @@ class AxiosData extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {  users: [] };
+    this.state = {  
+      users: [],
+      loading: false
+    
+    };
   }
 
   getUser(){
+    //Loading Data
+    this.setState({
+      loading: true
+    })
+
     axios("https://api.randomuser.me/?nat=US&results=5").then(response => 
       this.setState({
-          users: response.data.results
+          users: response.data.results,
+          loading: false
       }) 
     );
   }
+
 
   componentWillMount(){
     this. getUser();
@@ -43,7 +55,8 @@ class AxiosData extends React.Component {
     return (
       <div>
         axios API: 
-        {this.state.users.map(user => 
+        {!this.state.loading ? 
+          this.state.users.map(user =>  (
           <div>
             <h3>{user.name.first}</h3>
             <p>{user.email}</p>
@@ -51,7 +64,7 @@ class AxiosData extends React.Component {
             <hr/>
           </div>
           
-          )}
+          )): <Loading />}
       </div>
       
     );
