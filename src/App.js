@@ -1,15 +1,28 @@
 import logo from './logo.svg';
 import './App.css';
 import axios from 'axios'
-import { Component } from 'react';
+import React , {Component , useState} from 'react';
 
-// data ={
+const useStateApp = () => {
+  const [count, setCount] = useState(0)
 
-// }
+  const increment = () => {
+    setCount(count+1)
+  }
+
+  return (
+    <div>
+      <h2>counter app </h2>
+      <button onClick={increment}>Clicked {count} tim</button>
+    </div>
+  )
+
+
+}
+
+
 
 function App() {
-
-
   return (
     <div className="App">
       <header className="App-header">
@@ -23,4 +36,4 @@ function App() {
 
 
 
-export default App;
+export default useStateApp ;

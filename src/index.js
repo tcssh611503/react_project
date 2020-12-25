@@ -1,5 +1,5 @@
 // import React  from 'react';
-import React , {Component} from 'react';
+import React , {Component , useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -28,10 +28,23 @@ class AxiosData extends React.Component {
     super(props);
     this.state = {  
       users: [],
-      loading: false
+      loading: false,
+      count: 0
     };
+
+
     //bind
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.conter = this.conter.bind(this);
+
+
+  }
+
+  conter(){
+
+      this.setState({
+        count: this.state.count +1
+      });
 
   }
 
@@ -60,7 +73,7 @@ class AxiosData extends React.Component {
     axios("https://api.randomuser.me/?nat=US&results=5").then(response => 
       this.setState({
           users: response.data.results,
-          loading: false
+          loading: false,
       }) 
     );
   }
@@ -75,6 +88,7 @@ class AxiosData extends React.Component {
 
   componentWillMount(){
     this. getUser();
+    this. conter();
 
   }
 
@@ -100,7 +114,12 @@ class AxiosData extends React.Component {
           ) : (
             <Loading message="Hey Hey Hey" />
           )}
+          <div>
+             <h2>counter app </h2>
+             <button onClick={this.conter}>Clicked {this.state.count} tim</button>
+         </div>
       </div>
+
       
     );
   }
