@@ -88,9 +88,21 @@ class AxiosData extends React.Component {
 
   componentWillMount(){
     this. getUser();
-    this. conter();
 
+    //初始先算一次
+    this. conter();
   }
+
+  //update web title
+  // componentDidMount() {
+  //   document.title = `Clicked ${this.state.count} times`
+  // }
+
+  // componentDidUpdate() {
+  //   document.title = `Clicked ${this.state.count} times`
+  // }
+
+
 
   render() {
     return (
