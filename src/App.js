@@ -1,8 +1,10 @@
 import logo from './logo.svg';
-// import './App.css';
+import './App.css';
 import axios from 'axios'
 import React , {Component , useState, useEffect} from 'react';
-import {CardList} from './components/card-list/card-list'
+import {CardList}  from './components/card-list/card-list'
+import {SearchBox} from './components/searchbox/search-box'
+
 
 
 const NewsApp = () => {
@@ -207,8 +209,12 @@ class monsters2 extends React.Component {
     super();
     this.state = {
       string: 'Hello React',
-      monsters: []
+      monsters: [],
+      searchField: ''
     };
+    //獨立寫成function時，要bind
+    // this.handleChange = this.handleChange.bind(this);
+    //使用arrowfunction時不需要bind in constructor
   }
 
   //Fetching Content Data
@@ -232,13 +238,59 @@ class monsters2 extends React.Component {
 
   // }
 
+// 獨立寫成function
+//   <SearchBox 
+//   placeholder='search monsters' 
+//   handleChange={e => this.setState({searchField: e.target.value})}
+// />
+  // handleChange(e){
+  //   this.setState({searchField: e.target.value})
+  // }
+  //改為arrow function
+  //使用arrowfunction時不需要bind in constructor
+  handleChange = (e) => {
+    this.setState({searchField: e.target.value})
+  }
+
 
 
   render(){
+    const {monsters , searchField } = this.state;
+    const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase())
+    );
+    //equal
+    // const monsters = this.state.monsters;
+    // const searchField = this.state.searchField;
+
   //name='YY' props
-    return (
+  // 取input的value setState內即時同步
+  // <input type='search' placeholder='search monsters' onChange={e  => {
+  //   this.setState({searchField: e.target.value}, () =>console.log(this.state,"raw"));
+  //   console.log(this.state,"after");
+  //   }} />
+  // <input type='search' placeholder='search monsters' onChange={e  => console.log(e.target.value)} />
+  // <input type='search' placeholder='search monsters' onChange={e  => {
+  //   this.setState({searchField: e.target.value}, () =>console.log(this.state,"raw"));
+  //   console.log(this.state,"after");
+  //   }} />
+
+  //  從this.state
+  // <CardList monsters={this.state.monsters} /> 
+  // 改為filtered
+  //<CardList monsters={filteredMonsters} /> 
+
+//handleChange={e =>this.handleChange}
+// =this.handleChange
+
+
+  return (
       <div className="App">
-        <CardList monsters={this.state.monsters} /> 
+        <h1>monsters Loading</h1>
+        <SearchBox 
+          placeholder='search monsters' 
+          handleChange={this.handleChange}
+        />
+        <CardList monsters={filteredMonsters} /> 
       </div>
     );
   }

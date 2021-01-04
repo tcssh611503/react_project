@@ -10,7 +10,8 @@ import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App ></App>
+    <App></App>
+    <div id="click"></div>
 
   </React.StrictMode>,
   document.getElementById('root')
@@ -161,38 +162,38 @@ ReactDOM.render(
 // );
 
 
+// click 1 直接執行，之後按無法應
+// click 2
+// click 3
+// click 4
+
+class Click extends React.Component {
+  constructor() {
+    super();
+    // this.handleClick2 = this.handClick1.bind(this);
+  }
+
+  handleClick1() {
+    console.log("button 1 clicked");
+  }
+
+  handleClick3 = () => console.log('button 3 clicked',this);
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.handleClick1()}>click 1 </button>
+        <button onClick={this.handleClick1}>click 2 </button>
+
+        <button onClick={this.handleClick3}>click 4 </button>
+
+      </div>
+    );
+  }
+}
 
 
-// class Timer extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { seconds: 0 };
-//   }
-
-//   tick() {
-//     this.setState(state => ({
-//       seconds: state.seconds + 1
-//     }));
-//   }
-
-//   componentDidMount() {
-//     this.interval = setInterval(() => this.tick(), 1000);
-//   }
-
-//   componentWillUnmount() {
-//     clearInterval(this.interval);
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         Seconds: {this.state.seconds}
-//       </div>
-//     );
-//   }
-// }
-
-// ReactDOM.render(
-//   <Timer />,
-//   document.getElementById('timer-example')
-// );
+ReactDOM.render(
+  <Click />,
+  document.getElementById('click')
+);
