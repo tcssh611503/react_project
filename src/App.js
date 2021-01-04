@@ -1,7 +1,8 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import axios from 'axios'
 import React , {Component , useState, useEffect} from 'react';
+import {CardList} from './components/card-list/card-list'
 
 
 const NewsApp = () => {
@@ -142,6 +143,108 @@ function App() {
   );
 }
 
+class App2 extends Component {
+  constructor(){
+    super();
+    this.state = {
+      string: 'Hello React',
+    };
+  }
+  render(){
+    return (
+      //JSX attribute
+      <div className="App">
+        <header className="App-header">
+          <p>
+             {this.state.string}
+          </p>
+        </header>
+        <p>{4+5}</p>
+        <button onClick={()=> this.setState({string:'change'})}>Change Text</button>
+      </div>
+    );
+  }
+
+}
 
 
-export default NewsApp ;
+class monsters extends Component {
+  constructor(){
+    super();
+    this.state = {
+      string: 'Hello React',
+      monsters: [
+        {
+          name: "Doctor",
+          id: 'asc1'
+        },
+        {
+          name: "Peter",
+          id: 'asc2'
+        },
+        {
+          name: "Zobie",
+          id: 'asc3'
+        }
+      ]
+    };
+  }
+  render(){
+    return (
+      <div className="App">
+       {
+         this.state.monsters.map(monster => <h1 key={monster.id}>{monster.name}  </h1>)
+       }
+      </div>
+    );
+  }
+
+}
+
+
+class monsters2 extends React.Component {
+  constructor(){
+    super();
+    this.state = {
+      string: 'Hello React',
+      monsters: []
+    };
+  }
+
+  //Fetching Content Data
+  componentDidMount(){
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then(response => response.json())
+    .then(users => this.setState({monsters: users}))
+
+  }
+
+  //check data
+  // componentDidMount(){
+  //   fetch("https://jsonplaceholder.typicode.com/users").then(
+  //     response => console.log(response)
+  //   )
+  // }
+  // componentDidMount(){
+  //   fetch("https://jsonplaceholder.typicode.com/users")
+  //   .then(response => response.json())
+  //   .then(users => console.log(users))
+
+  // }
+
+
+
+  render(){
+  //name='YY' props
+    return (
+      <div className="App">
+        <CardList monsters={this.state.monsters} /> 
+      </div>
+    );
+  }
+
+}
+
+
+
+export default monsters2 ;
