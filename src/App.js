@@ -210,7 +210,9 @@ class monsters2 extends React.Component {
     this.state = {
       string: 'Hello React',
       monsters: [],
-      searchField: ''
+      searchField: '',
+      title: ''
+
     };
     //獨立寫成function時，要bind
     // this.handleChange = this.handleChange.bind(this);
@@ -224,6 +226,7 @@ class monsters2 extends React.Component {
     .then(users => this.setState({monsters: users}))
 
   }
+  
 
   //check data
   // componentDidMount(){
@@ -249,13 +252,14 @@ class monsters2 extends React.Component {
   //改為arrow function
   //使用arrowfunction時不需要bind in constructor
   handleChange = (e) => {
-    this.setState({searchField: e.target.value})
+    //雙向綁定
+    this.setState({searchField: e.target.value, title:e.target.value})
   }
 
 
 
   render(){
-    const {monsters , searchField } = this.state;
+    const {monsters , searchField , title} = this.state;
     const filteredMonsters = monsters.filter(monster => monster.name.toLowerCase().includes(searchField.toLowerCase())
     );
     //equal
@@ -286,6 +290,7 @@ class monsters2 extends React.Component {
   return (
       <div className="App">
         <h1>monsters Loading</h1>
+        <h1>{title}</h1>
         <SearchBox 
           placeholder='search monsters' 
           handleChange={this.handleChange}
